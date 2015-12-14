@@ -2,7 +2,7 @@
   "name": "linter-processing",
   "main": "./lib/init",
   "version": "2.0.0",
-  "description": "Lint Clojure on the fly, using clojure-x.x.x.jar",
+  "description": "atom-linter plugin for processing",
   "repository": "https://github.com/Kivifreak/linter-processing",
   "license": "MIT",
   "engines": {
