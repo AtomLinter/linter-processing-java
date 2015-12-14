@@ -44,16 +44,14 @@ module.exports =
           return helpers.exec(command, parameters, {stream: "both" } ).then ( output ) ->
             console.log "processing-linter found error: " + output.stderr;
             arr = output.stderr.split ":"
-
-            messages = []
-            messages.push(
-              type: 'error' # Issue instead of error?
-              filePath: arr[0]
-              range: [ [parseInt(arr[1]-1, 10), parseInt(arr[2], 10)], [parseInt(arr[3]-1, 10), parseInt(arr[4], 10)] ]
-              text: output.stderr
-            )
-            return messages
-            # console.log "DONE: "+message
-
-            #return errors
+            if output.stderr.length > 3
+              messages = []
+              messages.push(
+                type: 'error' # Issue instead of error?
+                filePath: arr[0]
+                range: [ [parseInt(arr[1]-1, 10), parseInt(arr[2], 10)], [parseInt(arr[3]-1, 10), parseInt(arr[4], 10)] ]
+                text: output.stderr
+              )
+             return messages
+             
         else console.log "This is not a .pde file"
