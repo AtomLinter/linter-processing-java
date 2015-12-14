@@ -2,6 +2,7 @@ linter-processing
 ===========
 
 This linter plugin for [Linter](https://github.com/AtomLinter/Linter) provides an interface to [processing-java](http://processing.org). It will be used on files which have a '.pde' extension.
+Linter-processing is a fork of [linter-clojure](https://github.com/AtomLinter/linter-clojure/).
 
 ## Installation
 On first activation the plugin will install all dependencies automatically.
