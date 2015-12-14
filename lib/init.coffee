@@ -1,5 +1,5 @@
 # Everything seems to work perfectly fine, but the error doesn't get underlined or marked by a red dot.
-# Another weird thing that happened when developping this linter was: ['source.pde'] didn't seem to work,
+# Another weird thing that happened when developping this linter was that ['source.pde'] didn't seem to work,
 # so I ended up using grammarScopes: ['*'] and then checking manually if that file ended on .pde
 module.exports =
   config:
