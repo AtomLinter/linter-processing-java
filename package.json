@@ -2,8 +2,8 @@
   "name": "linter-processing",
   "main": "./lib/init",
   "version": "1.1.1",
-  "description": "Lint Processing on the fly, using processing-java. The original repository was: https://github.com/AtomLinter/linter-clojure",
-  "repository": "https://github.com/Kivifreak/linter-processing/",
+  "description": "Lint Clojure on the fly, using clojure-x.x.x.jar",
+  "repository": "https://github.com/Kivifreak/linter-processing",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
