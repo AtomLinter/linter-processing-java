@@ -3,26 +3,28 @@ module.exports =
     javaExecutablePath:
       type: 'string'
       default: 'java'
-    processingExecutablePath:
+    clojureExecutablePath:
       type: 'string'
-      default: 'processing-java'
+      default: 'clojure-x.x.x.jar'
 
   activate: ->
     require('atom-package-deps').install()
 
   provideLinter: ->
     helpers = require('atom-linter')
-    regex = '*'
+    regex = 'RuntimeException:(?<message>.*), compiling:(.*):(?<line>\\d+):(?<col>\\d+)'
     provider =
-      grammarScopes: ['source.pde']
+      grammarScopes: ['source.clojure', 'source.clojurescript']
       scope: 'file'
-      lintOnFly: false # Only when saving
+      lintOnFly: true
       lint: (textEditor) =>
         filePath = textEditor.getPath()
-        command = atom.config.get('linter-clojure.processingExecutablePath') or 'processing-java'
+        command = atom.config.get('linter-clojure.javaExecutablePath') or 'java'
         parameters = [
-          '--sketch='+filePath,
-          '--build'
+          '-jar',
+          atom.config.get('linter-clojure.clojureExecutablePath'),
+          '-i',
+          filePath
         ]
 
         return helpers.exec(command, parameters, {stream: 'stderr'}).then (output) ->
