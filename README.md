@@ -12,4 +12,6 @@ You can configure linter-processing by editing ~/.atom/config.cson (choose Open 
 
 ## Installation of processing-java
 In order to make sure $PATH is set correctly, you should run Atom from the command line!!! (This is important, elsewise it won't find processing-java).
+
+
 Make sure to link the processing-java command correctly. Installation process of processing-java can be seen here: https://atom.io/packages/processing
