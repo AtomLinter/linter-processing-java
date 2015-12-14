@@ -1,27 +1,14 @@
-linter-clojure
+linter-processing
 ===========
 
-This linter plugin for [Linter](https://github.com/AtomLinter/Linter) provides an interface to [clojure-x.x.x.jar](http://clojure.org/). It will be used with files that have the “Clojure” syntax.
+This linter plugin for [Linter](https://github.com/AtomLinter/Linter) provides an interface to [processing-java](http://processing.org). It will be used on files which have a '.pde' extension.
 
 ## Installation
-On first activation the plugin will install all dependencies automatically, you no longer have to worry about installing Linter.
+On first activation the plugin will install all dependencies automatically.
 
 ## Settings
-You can configure linter-clojure by editing ~/.atom/config.cson (choose Open Your Config in Atom menu):
+You can configure linter-processing by editing ~/.atom/config.cson (choose Open Your Config in Atom menu):
 
-**Windows Example Settings**
-
-```
-'linter-clojure':
-  'clojureExecutablePath': 'D:\\downloads\\clojure-1.6.0\\clojure-1.6.0.jar' # <- point directly to the jar file
-  'javaExecutablePath': 'C:\\Program Files (x86)\\Java\\jdk1.7.0\\bin' # to find java in this directory
-```
-
-**Mac Example Settings**
-
-*It is important to note that 'javaExecutablePath' MUST point at the Java executable, not just the path it resides within.*
-```
-  "linter-clojure":
-    clojureExecutablePath: "/Users/theusername/.m2/repository/org/clojure/clojure/1.6.0/clojure-1.6.0.jar"
-    javaExecutablePath: "/usr/bin/java"
-```
+## Installation of processing-java
+In order to make sure $PATH is set correctly, you should run Atom from the command line!!! (This is important, elsewise it won't find processing-java).
+Make sure to link the processing-java command correctly. Installation process of processing-java can be seen here: https://atom.io/packages/processing
