@@ -1,35 +1,59 @@
+# Everything seems to work perfectly fine, but the error doesn't get underlined or marked by a red dot.
+# Another weird thing that happened when developping this linter was: ['source.pde'] didn't seem to work,
+# so I ended up using grammarScopes: ['*'] and then checking manually if that file ended on .pde
 module.exports =
   config:
-    javaExecutablePath:
+    processingExecutablePath:
       type: 'string'
-      default: 'java'
-    clojureExecutablePath:
-      type: 'string'
-      default: 'clojure-x.x.x.jar'
+      default: 'processing-java'
 
   activate: ->
     require('atom-package-deps').install()
 
   provideLinter: ->
     helpers = require('atom-linter')
-    regex = 'RuntimeException:(?<message>.*), compiling:(.*):(?<line>\\d+):(?<col>\\d+)'
     provider =
-      grammarScopes: ['source.clojure', 'source.clojurescript']
-      scope: 'file'
-      lintOnFly: true
+      grammarScopes: ['*'] # For whatever reason ['source.pde'] didn't work
+      scope: 'project'
+      lintOnFly: false
+
       lint: (textEditor) =>
+        String::endsWith   ?= (s) -> s == '' or @slice(-s.length) == s
         filePath = textEditor.getPath()
-        command = atom.config.get('linter-clojure.javaExecutablePath') or 'java'
-        parameters = [
-          '-jar',
-          atom.config.get('linter-clojure.clojureExecutablePath'),
-          '-i',
-          filePath
-        ]
 
-        return helpers.exec(command, parameters, {stream: 'stderr'}).then (output) ->
-          errors = for message in helpers.parse(output, regex, {filePath: filePath})
-            message.type = 'error'
-            message
+        if filePath.endsWith(".pde")
+          # Now in order for processing-java to work, we have to find the folder of the filePath
+          # For Windows
+          winSign = filePath.lastIndexOf "\\"
+          # For Linux / OS X & others
+          nixSign = filePath.lastIndexOf "/"
+          sign = nixSign
+          if winSign > nixSign
+            sign = winSign
 
-          return errors
+          # Find folder location of the pde file (MUST BE THE PARENT FOLDER!!!)
+          filePath = filePath.substring 0, sign
+
+          command = atom.config.get('linter-processing.processingExecutablePath') or 'processing-java'
+          parameters = [
+            '--sketch='+filePath,
+            '--build'
+          ]
+          console.log "processing-linter executing: "+(atom.config.get('linter-processing.processingExecutablePath') or 'processing-java')+' --sketch='+filePath+' --build'
+
+          return helpers.exec(command, parameters, {stream: "both" } ).then ( output ) ->
+            console.log "processing-linter found error: " + output.stderr;
+            arr = output.stderr.split ":"
+
+            messages = []
+            messages.push(
+              type: 'error' # Issue instead of error?
+              filePath: arr[0]
+              range: [ [parseInt(arr[1]-1, 10), parseInt(arr[2], 10)], [parseInt(arr[3]-1, 10), parseInt(arr[4], 10)] ]
+              text: output.stderr
+            )
+            return messages
+            # console.log "DONE: "+message
+
+            #return errors
+        else console.log "This is not a .pde file"
