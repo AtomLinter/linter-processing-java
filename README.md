@@ -1,17 +1,65 @@
-linter-processing
-===========
+# Everything seems to work perfectly fine, but the error doesn't get underlined or marked by a red dot.
+# Another weird thing that happened when developping this linter was that ['source.pde'] didn't seem to work,
+# so I ended up using grammarScopes: ['*'] and then checking manually if that file ended on .pde
+module.exports =
+  config:
+    processingExecutablePath:
+      type: 'string'
+      default: 'processing-java'
+  activate: ->
+    require('atom-package-deps').install()
 
-This linter plugin for [Linter](https://github.com/AtomLinter/Linter) provides an interface to [processing-java](http://processing.org). It will be used on files which have a '.pde' extension.
-Linter-processing is a fork of [linter-clojure](https://github.com/AtomLinter/linter-clojure/).
+  provideLinter: ->
+    helpers = require('atom-linter')
+    provider =
+      grammarScopes: ['*'] # For whatever reason ['source.pde'] didn't work
+      scope: 'project'
+      lintOnFly: false
+      showErrorPanel: true
+      showErrorInline: true
 
-## Installation
-On first activation the plugin will install all dependencies automatically. processing-java has to be installed manually.
+      showErrorTabProject: true
+      underlineIssues: true
+      statusIconPosition: 'Left'
 
-## Settings
-You can configure linter-processing by editing ~/.atom/config.cson (choose Open Your Config in Atom menu):
+      lint: (textEditor) =>
+        new Promise (resolve, reject) =>
+          String::endsWith   ?= (s) -> s == '' or @slice(-s.length) == s
+          filePath = textEditor.getPath()
 
-## Installation of processing-java
-In order to make sure $PATH is set correctly, you should run Atom from the command line!!! (This is important, elsewise it won't find processing-java).
+          if filePath.endsWith(".pde")
+            # Now in order for processing-java to work, we have to find the folder of the filePath
+            # For Windows
+            winSign = filePath.lastIndexOf "\\"
+            # For Linux / OS X & others
+            nixSign = filePath.lastIndexOf "/"
+            sign = nixSign
+            if winSign > nixSign
+              sign = winSign
 
+            # Find folder location of the pde file (MUST BE THE PARENT FOLDER!!!)
+            filePath = filePath.substring 0, sign
 
-Make sure to link the processing-java command correctly. Installation process of processing-java can be seen here: https://atom.io/packages/processing
+            command = atom.config.get('linter-processing.processingExecutablePath') or 'processing-java'
+            parameters = [
+              '--sketch='+filePath,
+              '--build'
+            ]
+            #console.log "processing-linter executing: "+(atom.config.get('linter-processing.processingExecutablePath') or 'processing-java')+' --sketch='+filePath+' --build'
+
+            return helpers.exec(command, parameters, {stream: "both" } ).then ( output ) ->
+              #console.log "processing-linter found error: " + output.stderr;
+              arr = output.stderr.split ":"
+              if output.stderr.length > 3
+                messages = []
+                messages.push(
+                  type: "error", # Issue instead of error?
+                  filePath: arr[0],
+                  range: [[parseInt(arr[1], 10)-1, parseInt(arr[2], 10)], [parseInt(arr[3], 10)-1, parseInt(arr[4], 10)] ],
+                  text: output.stderr,
+                )
+                resolve messages
+              else resolve []
+          else
+            #console.log "This is not a .pde file"
+            resolve []
