@@ -5,7 +5,7 @@ This linter plugin for [Linter](https://github.com/AtomLinter/Linter) provides a
 Linter-processing is a fork of [linter-clojure](https://github.com/AtomLinter/linter-clojure/).
 
 ## Installation
-On first activation the plugin will install all dependencies automatically.
+On first activation the plugin will install all dependencies automatically. processing-java has to be installed manually.
 
 ## Settings
 You can configure linter-processing by editing ~/.atom/config.cson (choose Open Your Config in Atom menu):
