@@ -2,5 +2,8 @@
   extends: "airbnb-base",
   globals: {
     atom: true
+  },
+  rules: {
+    linebreak-style: ["error", "windows"]
   }
 }
