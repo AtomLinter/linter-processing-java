@@ -3,7 +3,7 @@
   "main": "./lib/init",
   "version": "2.2.2",
   "description": "atom-linter plugin for processing",
-  "repository": "https://github.com/Kivifreak/linter-processing",
+  "repository": "https://github.com/retrocraft/linter-processing",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
