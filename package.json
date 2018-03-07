@@ -3,7 +3,7 @@
   "main": "./lib/init",
   "version": "0.1.1",
   "description": "atom-linter plugin for processing",
-  "repository": "https://github.com/retrocraft/linter-processing-java",
+  "repository": "https://github.com/AtomLinter/linter-processing-java",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
