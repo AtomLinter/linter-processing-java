@@ -3,7 +3,10 @@
   "main": "./lib/init",
   "version": "0.1.2",
   "description": "atom-linter plugin for processing",
-  "repository": "https://github.com/AtomLinter/linter-processing-java",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AtomLinter/linter-processing-java.git"
+  },
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
