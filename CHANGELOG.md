@@ -1,3 +1,10 @@
+## [0.1.5](https://github.com/AtomLinter/linter-processing-java/compare/v0.1.4...v0.1.5) (2019-02-27)
+
+
+### Bug Fixes
+
+* incorrect config path for processingExecutablePath ([0d03d35](https://github.com/AtomLinter/linter-processing-java/commit/0d03d35))
+
 ## [0.1.4](https://github.com/AtomLinter/linter-processing-java/compare/v0.1.3...v0.1.4) (2019-02-27)
 
 
