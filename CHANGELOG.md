@@ -1,3 +1,10 @@
+## [0.1.6](https://github.com/AtomLinter/linter-processing-java/compare/v0.1.5...v0.1.6) (2019-04-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency atom-package-deps to v5.1.0 ([aa84ad0](https://github.com/AtomLinter/linter-processing-java/commit/aa84ad0))
+
 ## [0.1.5](https://github.com/AtomLinter/linter-processing-java/compare/v0.1.4...v0.1.5) (2019-02-27)
 
 
