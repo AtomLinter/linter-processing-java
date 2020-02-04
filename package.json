@@ -32,7 +32,7 @@
     "eslint-config-airbnb-base": "14.0.0",
     "eslint-plugin-import": "2.19.1",
     "husky": "4.0.9",
-    "semantic-release": "17.0.1"
+    "semantic-release": "17.0.2"
   },
   "package-deps": [
     "linter"
